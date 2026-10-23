@@ -1,0 +1,303 @@
+100 задач по слайсам в Go
+=========================
+
+1. Верни сумму всех элементов слайса. Для пустого слайса верни 0.
+func Sum(s []int) int
+
+2. Верни минимальный элемент и true. Для пустого слайса верни 0 и false.
+func Min(s []int) (int, bool)
+
+3. Верни максимальный элемент и true. Для пустого слайса верни 0 и false.
+func Max(s []int) (int, bool)
+
+4. Посчитай количество четных элементов.
+func CountEven(s []int) int
+
+5. Верни true, если target встречается в слайсе хотя бы один раз.
+func Contains(s []int, target int) bool
+
+6. Посчитай, сколько раз target встречается в слайсе.
+func CountOccurrences(s []int, target int) int
+
+7. Верни индекс первого вхождения target. Если элемента нет, верни -1.
+func IndexOf(s []int, target int) int
+
+8. Верни слайс всех индексов, на которых встречается target, в возрастающем порядке.
+func IndexesOf(s []int, target int) []int
+
+9. Замени все значения old на new прямо в исходном слайсе. Новый слайс создавать нельзя.
+func ReplaceAll(s []int, old, new int)
+
+10. Разверни слайс in-place. Дополнительный слайс создавать нельзя; O(1) дополнительной памяти.
+func Reverse(s []int)
+
+11. Поменяй местами соседние элементы: [1,2,3,4,5] -> [2,1,4,3,5]. Работай in-place.
+func SwapPairs(s []int)
+
+12. Разверни in-place участок с индексами от left до right включительно. Некорректные границы должны возвращать ошибку, не меняя слайс.
+func ReverseRange(s []int, left, right int) error
+
+13. Удали элемент с индексом i, сохранив порядок остальных элементов. Используй существующий backing array, если это возможно.
+func RemoveAt(s []int, i int) ([]int, error)
+
+14. Удали элемент с индексом i за O(1), если порядок остальных элементов сохранять не требуется.
+func RemoveAtFast(s []int, i int) ([]int, error)
+
+15. Верни новый независимый слайс без элементов, равных target. Результат не должен alias-ить входной слайс.
+func RemoveAll(s []int, target int) []int
+
+16. Удали все target in-place, сохранив порядок. Новый backing array выделять нельзя.
+func RemoveAllInPlace(s []int, target int) []int
+
+17. Оставь только четные элементы, сохранив их порядок. Работай in-place без нового backing array.
+func KeepEvenInPlace(s []int) []int
+
+18. Перемести все нули в конец, сохранив относительный порядок ненулевых элементов. Работай in-place и O(1) дополнительной памяти.
+func MoveZeroToEnd(s []int)
+
+19. Сдвинь ненулевые элементы в начало слайса, сохрани порядок, и верни слайс только с ними. Хвост результата должен быть исключен через изменение len.
+func CompactNonZero(s []int) []int
+
+20. Вставь value перед элементом с индексом i; i может быть равен len(s). Сохрани порядок. Используй append/copy; корректно работай и при realloc.
+func InsertAt(s []int, i, value int) ([]int, error)
+
+21. Вставь весь values перед индексом i. values может быть пустым. Сохрани порядок элементов.
+func InsertMany(s []int, i int, values []int) ([]int, error)
+
+22. Удали полуинтервал [left:right), сохранив порядок. Для пустого диапазона верни исходный слайс без изменений.
+func DeleteRange(s []int, left, right int) ([]int, error)
+
+23. Замени полуинтервал [left:right) элементами values. Количество удаляемых и вставляемых элементов может различаться.
+func ReplaceRange(s []int, left, right int, values []int) ([]int, error)
+
+24. Реализуй аналог splice: начиная со start удали deleteCount элементов и вставь values. Сохрани порядок и минимизируй лишние аллокации.
+func Splice(s []int, start, deleteCount int, values []int) ([]int, error)
+
+25. Верни полную независимую копию слайса. Изменения результата не должны влиять на исходный слайс и наоборот.
+func Clone(s []int) []int
+
+26. Верни независимую копию полуинтервала [left:right). Не возвращай subslice исходного backing array.
+func CloneRange(s []int, left, right int) ([]int, error)
+
+27. Объедини два слайса в новый независимый слайс. Постарайся сделать не более одной аллокации под backing array результата.
+func Concat(a, b []int) []int
+
+28. Объедини произвольное количество слайсов в один независимый слайс. Сначала вычисли итоговую длину и постарайся выделить память один раз.
+func ConcatMany(parts ...[]int) []int
+
+29. Верни уникальные элементы в порядке первого появления. Результат должен быть независимым от исходного слайса.
+func Unique(s []int) []int
+
+30. Удаляй повторы in-place, сохраняя первое появление каждого значения и исходный порядок. Допускается map для проверки наличия, но новый backing array для результата создавать нельзя.
+func UniqueInPlace(s []int) []int
+
+31. Для отсортированного слайса удали дубликаты in-place за O(n) времени и O(1) дополнительной памяти.
+func UniqueSortedInPlace(s []int) []int
+
+32. Слайс отсортирован. Оставь не более k копий каждого значения, работая in-place за O(n).
+func KeepAtMostKDuplicates(s []int, k int) ([]int, error)
+
+33. Верни уникальные значения, которые встречаются и в a, и в b. Порядок результата должен соответствовать первому появлению в a.
+func IntersectionUnique(a, b []int) []int
+
+34. Верни пересечение с учетом количества повторений: каждое значение должно встретиться min(countA, countB) раз.
+func IntersectionMulti(a, b []int) []int
+
+35. Верни элементы a, значения которых вообще не встречаются в b. Сохрани порядок a.
+func Difference(a, b []int) []int
+
+36. Верни значения, присутствующие ровно в одном из двух слайсов. Каждый результат должен встречаться один раз.
+func SymmetricDifference(a, b []int) []int
+
+37. Объедини два отсортированных по возрастанию слайса в один отсортированный за O(len(a) + len(b)).
+func MergeSorted(a, b []int) []int
+
+38. Объедини два отсортированных слайса, одновременно удаляя дубликаты, за линейное время.
+func MergeSortedUnique(a, b []int) []int
+
+39. Проверь, отсортирован ли слайс по неубыванию.
+func IsSorted(s []int) bool
+
+40. Переставь элементы in-place так, чтобы сначала шли элементы < pivot, затем элементы >= pivot. Порядок сохранять не требуется. Верни индекс начала второй части.
+func Partition(s []int, pivot int) int
+
+41. Переставь элементы так, чтобы сначала шли < pivot, затем >= pivot, сохранив относительный порядок внутри обеих групп. Дополнительный слайс разрешен.
+func StablePartition(s []int, pivot int) []int
+
+42. То же самое, но новый backing array создавать нельзя. Дополнительная память O(1). Разрешена сложность хуже O(n), но решение должно быть корректным и устойчивым.
+func StablePartitionInPlace(s []int, pivot int)
+
+43. Циклически сдвинь слайс влево на k позиций in-place. k может быть больше len(s) и может быть отрицательным.
+func RotateLeft(s []int, k int)
+
+44. Циклически сдвинь слайс вправо на k позиций in-place, используя O(1) дополнительной памяти.
+func RotateRight(s []int, k int)
+
+45. Преобразуй слайс в следующую лексикографическую перестановку in-place. Верни false и преврати его в минимальную перестановку, если следующей не существует.
+func NextPermutation(s []int) bool
+
+46. Переставь элементы in-place за один проход так, чтобы сначала шли < pivot, затем == pivot, затем > pivot. Порядок сохранять не требуется.
+func DutchFlag(s []int, pivot int)
+
+47. Разбей слайс на чанки размера size. Последний может быть короче. Чанки должны быть views одного backing array, без копирования данных.
+func ChunkViews(s []int, size int) ([][]int, error)
+
+48. Разбей на чанки того же размера, но каждый чанк должен иметь независимый backing array.
+func ChunkCopies(s []int, size int) ([][]int, error)
+
+49. Разбей слайс на k непустых или пустых views максимально равного размера: длины частей должны отличаться не более чем на 1.
+func SplitIntoKViews(s []int, k int) ([][]int, error)
+
+50. Верни все подряд идущие окна длины size как subslice исходного backing array. Для size > len(s) верни пустой результат.
+func SlidingWindowViews(s []int, size int) ([][]int, error)
+
+51. Верни те же окна, но каждое окно должно быть независимой копией.
+func SlidingWindowCopies(s []int, size int) ([][]int, error)
+
+52. Разбей слайс на части по значениям sep, аналогично strings.Split. Определи и последовательно обработай пустые части между соседними sep и по краям.
+func SplitOnValue(s []int, sep int) [][]int
+
+53. Верни subslice без ведущих и хвостовых нулей. Не копируй данные и не меняй backing array.
+func TrimZeros(s []int) []int
+
+54. Верни reslice, у которого len == cap исходного s. Данные не копируй. Для nil slice результат должен оставаться nil.
+func ExpandToCap(s []int) []int
+
+55. Верни slice view с теми же элементами, но cap результата должен быть ровно len(s). Новый backing array создавать нельзя.
+func ClipCapacity(s []int) []int
+
+56. Верни первые n элементов как view, причем cap результата должен быть ровно n, чтобы последующий append не мог затереть элементы s после n.
+func TakeWithLimitedCap(s []int, n int) ([]int, error)
+
+57. Измени длину до n. При увеличении используй существующий cap без аллокации, если его хватает; новые элементы должны быть нулевыми. При уменьшении верни reslice.
+func Resize(s []int, n int) ([]int, error)
+
+58. Гарантируй cap >= minCap, сохранив len и значения. Если cap уже хватает, верни slice на том же backing array; иначе выдели новый.
+func EnsureCapacity(s []int, minCap int) ([]int, error)
+
+59. Добавь value только если это можно сделать без realloc. Если cap не хватает, верни исходный slice и false, не меняя backing array.
+func TryAppend(s []int, value int) ([]int, bool)
+
+60. Верни результат append, который гарантированно не alias-ит исходный backing array s, даже если в s было достаточно свободного cap.
+func AppendCopy(s []int, values ...int) []int
+
+61. Скопируй участок [left:right] начиная с индекса dst внутри того же слайса. Корректно обрабатывай перекрывающиеся диапазоны и проверяй границы.
+func CopyWithin(s []int, dst, left, right int) error
+
+62. Реализуй вставку values через увеличение длины и copy. values может alias-ить s; функция должна оставаться корректной.
+func InsertWithCopy(s []int, i int, values []int) ([]int, error)
+
+63. Удаляй [left:right] in-place, сохраняя порядок, а освободившийся хвост backing array обнуляй через clear, чтобы не удерживать ссылки на удаленные объекты.
+func DeleteAndClear[T any](s []T, left, right int) ([]T, error)
+
+64. Стабильно отфильтруй слайс in-place по keep, а хвост backing array после новой длины очисти через clear.
+func CompactAndClear[T any](s []T, keep func(T) bool) []T
+
+65. Напиши функцию-обертку над append с правильным API: вызывающая сторона должна иметь возможность получить новый slice header после возможного realloc.
+func AppendValue(s []int, value int) []int
+
+66. Добавь value, изменяя сам slice header вызывающей стороны через указатель на слайс.
+func AppendInPlace(s *[]int, value int)
+
+67. Верни view без первых n элементов. Не копируй данные. Корректно обработай n от 0 до len(s).
+func DropFirst(s []int, n int) ([]int, error)
+
+68. Измени slice header вызывающей стороны так, чтобы он больше не включал первые n элементов.
+func DropFirstInPlace(s *[]int, n int) error
+
+69. Удаляй элемент по индексу с сохранением порядка и записывай новый slice header обратно через *[]int.
+func DeleteAtInPlace(s *[]int, i int) error
+
+70. Возьми view base[left:right] и добавь values. Функция должна гарантировать, что элементы base за right не будут изменены, даже если исходного cap достаточно.
+func AppendToSubslice(base []int, left, right int, values ...int) ([]int, error)
+
+71. Верни view [left:right] с ограниченным cap == len(result), чтобы caller не мог append-ом затереть соседние элементы исходного backing array.
+func SafeSubslice(s []int, left, right int) ([]int, error)
+
+72. Верни независимую копию с теми же элементами и cap == len(s). Функция всегда должна разрывать aliasing с исходным backing array.
+func DetachIfShared(s []int) []int
+
+73. Верни сумму каждой строки равной матрицы.
+func RowSums(m [][]int) []int
+
+74. Для равной матрицы верни суммы по столбцам до максимальной длины строки; отсутствующие элементы не учитывай.
+func ColumnSums(m [][]int) []int
+
+75. Слей все строки в один слайс в порядке обхода строк. Постарайся заранее вычислить итоговую длину и сделать одну аллокацию.
+func Flatten(m [][]int) []int
+
+76. Разбей s на последовательные независимые части заданных размеров. Сумма sizes должна равняться len(s), иначе ошибка.
+func Unflatten(s []int, sizes []int) ([][]int, error)
+
+77. Транспонируй прямоугольную матрицу. Если строки имеют разные длины, верни ошибку.
+func Transpose(m [][]int) ([][]int, error)
+
+78. Транспонируй рваную матрицу: результат должен иметь столько строк, какова максимальная длина исходной строки; пропущенные элементы просто не добавляй.
+func TransposeRagged(m [][]int) [][]int
+
+79. Удаляй столбец col из каждой строки, где он существует. Сохраняй порядок элементов строк.
+func RemoveColumn(m [][]int, col int) [][]int
+
+80. Поверни квадратную матрицу на 90 градусов по часовой стрелке in-place. Если матрица не квадратная, верни ошибку без частичного изменения.
+func RotateSquare90(m [][]int) error
+
+81. Верни элементы прямоугольной матрицы по спирали. Для неравной матрицы верни ошибку.
+func SpiralOrder(m [][]int) ([]int, error)
+
+82. Построй новый слайс prefix длины len(s)+1, где prefix[0]=0, а prefix[i+1] - сумма первых i+1 элементов.
+func PrefixSums(s []int) []int
+
+83. Для каждого индекса верни произведение всех остальных элементов без деления. O(n) времени; не используй O(n) дополнительной памяти кроме результата.
+func ProductExceptSelf(s []int) []int
+
+84. Слайс отсортирован. Найди два разных индекса с суммой target за O(n) и O(1) памяти.
+func TwoSumSorted(s []int, target int) (i, j int, ok bool)
+
+85. Верни все уникальные тройки значений с суммой 0. Дубликатов троек быть не должно. Разрешается сортировать копию входного слайса.
+func ThreeSum(s []int) [][]int
+
+86. Найди самый длинный непрерывный строго возрастающий участок и верни его как полуинтервал [start:end). При равенстве длин выбери самый левый.
+func LongestIncreasingRun(s []int) (start, end int)
+
+87. Все элементы s неотрицательные. Верни минимальную длину непрерывного подмассива с суммой >= target или 0, если такого нет. Требуется O(n).
+func MinSubarrayLenAtLeast(s []int, target int) int
+
+88. Найди самый длинный непрерывный участок, содержащий не более k различных значений. Требуется O(n) в среднем.
+func LongestSubarrayAtMostKDistinct(s []int, k int) (start, end int)
+
+89. Верни максимум каждого окна длины k за O(n). Используй deque, реализованный на slice, без container/list.
+func SlidingWindowMax(s []int, k int) ([]int, error)
+
+90. Каждый интервал имеет вид [start,end]. Объедини пересекающиеся интервалы и верни непересекающийся отсортированный результат. Некорректные интервалы должны давать ошибку.
+func MergeIntervals(intervals [][]int) ([][]int, error)
+
+91. intervals уже отсортированы и не пересекаются. Вставь новый интервал и слей необходимые пересечения за O(n).
+func InsertInterval(intervals [][]int, newInterval []int) ([][]int, error)
+
+92. Первые aLen элементов а отсортированы, len(a)==aLen, но cap(a) >= aLen+len(b). b тоже отсортирован. Объедини b в a in-place, не выделяя новый backing array, и верни расширенный slice.
+func MergeIntoCapacity(a []int, aLen int, b []int) ([]int, error)
+
+93. а и b - соседние отсортированные части одного backing array: а заканчивается там, где начинается b. Слей их в один отсортированный диапазон без дополнительного backing array. Допускается сложность O(n*m), но решение должно корректно работать при aliasing. Гарантируется cap(a) >= len(a)+len(b), поэтому а можно расширить до общего диапазона.
+func MergeSortedInPlace(a []int, b []int) ([]int, error)
+
+94. Сделай циклический сдвиг вправо на k in-place через циклы перестановки (алгоритм с gcd), не используя тройной reverse и второй слайс.
+func RotateByCycles(s []int, k int)
+
+95. Верни все перестановки элементов. Каждый элемент результата должен иметь независимый backing array; никакие две перестановки не должны alias-ить друг друга.
+func Permutations(s []int) [][]int
+
+96. Верни все непустые непрерывные subslice исходного s как views без копирования. Порядок: сначала по start, затем по end.
+func ContiguousViews(s []int) [][]int
+
+97. Верни все непустые непрерывные подмассивы как независимые копии. Ни один внутренний slice не должен alias-ить s или другой результат.
+func ContiguousCopies(s []int) [][]int
+
+98. Раздели s на k последовательных views максимально равного размера. Дополнительно ограничь cap каждой части ее len, чтобы append к одной части не мог затереть соседнюю.
+func SplitBalancedViews(s []int, k int) ([][]int, error)
+
+99. edits отсортированы по Start, не пересекаются и задаются относительно исходного s. За один проход примени все удаления и вставки, сохраняя порядок. Постарайся заранее вычислить конечную длину и сделать не более одной новой аллокации.
+type Edit struct { Start, Delete int; Insert []int }
+func ApplyEdits(s []int, edits []Edit) ([]int, error)
+
+100. Реализуй splice, причем insert может быть subslice самого s и пересекаться как с удаляемой областью, так и с областью, которая будет сдвигаться. Результат должен быть корректным при любом таком aliasing и по возможности переиспользовать backing array.
+func SpliceAliasingSafe(s []int, start, deleteCount int, insert []int) ([]int, error)

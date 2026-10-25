@@ -1,6 +1,9 @@
 package main 
 
 func TrimUnicodeSpace(s string) string{
+	if s == ""{
+		return ""
+	}
 	sNew := []rune(s)
 	sOld := sNew
 	for {

@@ -7,7 +7,7 @@ func NormalizeString(s string) string {
 	sRune := []rune(sTrim)
 	normalized := []rune{}
 	flag:= false
-	for i:=0; i<len(sRune)-1;i++{
+	for i:=0; i<len(sRune);i++{
 		if sRune[i] == ' ' {
 			if !flag{
 				normalized = append(normalized, sRune[i])

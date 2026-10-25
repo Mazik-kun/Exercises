@@ -31,8 +31,9 @@ func main() {
 	isPalindrome:= "не казак"
 	fmt.Println(IsPalindrome(isPalindrome))
 
-	UnicodeSpace:= "    к ак к   к    f"
+	UnicodeSpace:= "		к ак к   к    f		"
 	fmt.Println(TrimUnicodeSpace(UnicodeSpace))
-
+	fmt.Println(TrimUnicodeSpace(""))
+	
 	fmt.Println(NormalizeString(UnicodeSpace))
 }

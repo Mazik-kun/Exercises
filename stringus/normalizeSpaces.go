@@ -1,6 +1,9 @@
 package main
 
-import "strings"
+import (
+	"strings"
+	"unicode"
+)
 
 func NormalizeString(s string) string {
 	sTrim := strings.TrimSpace(s)
@@ -8,9 +11,9 @@ func NormalizeString(s string) string {
 	normalized := []rune{}
 	flag:= false
 	for i:=0; i<len(sRune);i++{
-		if sRune[i] == ' ' {
+		if unicode.IsSpace(sRune[i]){
 			if !flag{
-				normalized = append(normalized, sRune[i])
+				normalized = append(normalized, ' ')
 				flag = true
 			}
 		}else{

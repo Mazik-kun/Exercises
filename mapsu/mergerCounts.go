@@ -1,11 +1,12 @@
 package main
 
-func MergeCounts(a, b map[string]int) map[string]int{
+import "maps"
+
+func MergeCounts(a, b map[string]int) map[string]int {
 	sum := make(map[string]int)
-	for key, v := range a{
-		if v2, ok := b[key]; ok{
-			sum[key] = v + v2
-		}
+	maps.Copy(sum, a)
+	for k, v := range b {
+		sum[k] += v
 	}
 	return sum
 }

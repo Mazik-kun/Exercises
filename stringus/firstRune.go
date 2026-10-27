@@ -1,10 +1,10 @@
 package main
 
-func FirstRune(s string) (bool,string) {
+func FirstRune(s string) (string,bool) {
 	if s == "" {
-		return  false, ""
+		return  "",false
 	}
 	str := []rune(s)
 	runa :=string(str[0])
-	return true, runa
+	return runa,true
 }

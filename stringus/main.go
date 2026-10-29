@@ -57,4 +57,11 @@ func main() {
 	fmt.Println(Join(Split("брухкрутожеуткаутрокаакут", "ут"), "утка"))
 	fmt.Println(TrimSet("брухкрутожеуткаутрокаакут", "брут"))
 	fmt.Println(CollapseRuns("ааааабаабаабабабабббба"))
+
+	fmt.Println(EncodeRLE("ааааабаабаабабабабббба"))
+	fmt.Println(DecodeRLE("5:а;1:б;2:а;1:б;2:а;1:б;1:а;1:б;1:а;1:б;1:а;4:б;1:а;"))
+	fmt.Println(WordCount(" aaaaaaa      aa    aaa"))
+
+	fmt.Println(WordFrequency("Hello, hello! World."))
+	fmt.Println(FirstUniqueRune("бадаак"))
 }

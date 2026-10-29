@@ -28,4 +28,18 @@ func main() {
 	ReplaceAll(sli,old,new)
 	Reverse(sli)
 	fmt.Println(sli)
+
+	SwapPairs(sli)
+
+	fmt.Println(sli)
+
+	fmt.Println(ReverseRange([]int{10, 20, 30, 40, 50, 60}, 1, 4))
+
+	fmt.Println(RemoveAt([]int{10, 20, 30, 40, 50}, 2))
+
+	fmt.Println(RemoveAtFast([]int{10, 20, 30, 40, 50}, 2)) 
+
+	fmt.Println(RemoveAll([]int{1, 2, 3, 2, 4, 2}, 2)) 
+
+	fmt.Println(RemoveAllInPlace([]int{1, 2, 3, 2, 4, 2}, 2))
 }

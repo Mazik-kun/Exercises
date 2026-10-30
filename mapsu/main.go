@@ -41,4 +41,19 @@ func main() {
 		"second": {4, 5},
 	}
 	fmt.Println(Clone(testMap3))
+
+	mapA := map[string]int{"apple": 1, "banana": 2}
+	mapB := map[string]int{"banana": 2, "apple": 1}
+
+	fmt.Println(Equal(mapA, mapB))
+
+	fmt.Println(Difference([]int{1, 2, 3, 4}, []int{2, 4}))
+
+	fmt.Println(Intersection(
+		[]string{"apple", "banana", "cherry", "apple"}, 
+		[]string{"cherry", "banana", "date"},
+	)) 
+	fmt.Println(SymmetricDifference([]int{1, 2, 3, 4}, []int{2, 4, 5})) 
+
+
 }

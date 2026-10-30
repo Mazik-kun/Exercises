@@ -42,4 +42,23 @@ func main() {
 	fmt.Println(RemoveAll([]int{1, 2, 3, 2, 4, 2}, 2)) 
 
 	fmt.Println(RemoveAllInPlace([]int{1, 2, 3, 2, 4, 2}, 2))
+
+	fmt.Println(KeepEvenInPlace([]int{1, 2, 3, 2, 4, 2}))
+
+	zeros:= []int{1,2,0,0,0,3,0,4,0,4,2,45,6,4,4,76,0,9,90,0,0,0,}
+	fmt.Println(CompactNonZero(zeros))
+	MoveZeroToEnd(zeros)
+	fmt.Println(zeros)
+
+	fmt.Println(InsertAt([]int{1,2,3,5,6},4,4))
+
+	fmt.Println(InsertMany([]int{1,2,3,5,6},1,[]int{}))
+
+	fmt.Println(DeleteRange([]int{1,2,3,5,6},1,2))
+
+	fmt.Println(ReplaceRange([]int{1,2,3,5,6},1,5,[]int{0,0,0}))
+
+	fmt.Println(Splice([]int{1,2,3,5,6},1,4,[]int{0,0,0}))
+	
+	fmt.Println(Clone([]int{1,2,3,5,6}))
 }

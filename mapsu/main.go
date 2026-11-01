@@ -55,5 +55,25 @@ func main() {
 	)) 
 	fmt.Println(SymmetricDifference([]int{1, 2, 3, 4}, []int{2, 4, 5})) 
 
+	fmt.Println(UniqueFold([]string{"Apple", "apple", "Banana", "banana", "Cherry"}))
 
+	fmt.Println(MostFrequent([]int{1, 1, 2, 2, 3, 3, 3})) 
+
+	fmt.Println(FirstUniqueRune("бадаак"))
+
+	fmt.Println(AreAnagrams("Listen", "Silent"))
+
+	fmt.Println(WordFrequency("Hello, hello! World. 123"))
+
+	fmt.Println(TopKWords("a b b c c c d d d d", 2))
+
+	fmt.Println(GroupByParity([]int{5, 2, 8, 1, 4}))
+
+	fmt.Println(GroupByLength([]string{"я", "ты", "он", "она", "они"}))
+
+	fmt.Println(GroupAnagrams([]string{"eat", "tea", "tan", "ate", "nat", "bat"}))
+
+	fmt.Println(MapValues(map[string]int{"a": 1, "b": 2}, func(x int) int { return x * 10 }))
+
+	fmt.Println(FilterMap(map[string]int{"a": 1, "b": 2, "c": 3}, func(k string, v int) bool { return v > 1 }))
 }

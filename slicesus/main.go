@@ -31,9 +31,9 @@ func main() {
 
 	SwapPairs(sli)
 
-	fmt.Println(sli)
+	fmt.Println(sli, "дели")
 
-	fmt.Println(ReverseRange([]int{10, 20, 30, 40, 50, 60}, 1, 4))
+	fmt.Println(ReverseRange([]int{7}, 0, 0))
 
 	fmt.Println(RemoveAt([]int{10, 20, 30, 40, 50}, 2))
 
@@ -53,9 +53,12 @@ func main() {
 	fmt.Println(InsertAt([]int{1,2,3,5,6},4,4))
 
 	fmt.Println(InsertMany([]int{1,2,3,5,6},1,[]int{}))
+	fmt.Println("разделитель")
 
-	fmt.Println(DeleteRange([]int{1,2,3,5,6},1,2))
+	fmt.Println(DeleteRange([]int{1, 2}, 4, 1))
 
+	fmt.Println("разделитель")
+	
 	fmt.Println(ReplaceRange([]int{1,2,3,5,6},1,5,[]int{0,0,0}))
 
 	fmt.Println(Splice([]int{1,2,3,5,6},1,4,[]int{0,0,0}))

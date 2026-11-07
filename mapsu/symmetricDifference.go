@@ -1,6 +1,9 @@
 package main
 
-import "slices"
+import (
+	"fmt"
+	"slices"
+)
 
 func SymmetricDifference(a, b []int) []int {
 	states := make(map[int]int)
@@ -11,11 +14,13 @@ func SymmetricDifference(a, b []int) []int {
 	for _, v := range b {
 		if states[v] == 1 {
 			states[v] = 2 
-		} else {
+		} else if _, ok := states[v]; !ok{
 			states[v] = 1
 		}
 	}
+
 	for k, state := range states {
+		fmt.Println(state, "дел")
 		if state == 1 {
 			res = append(res, k)
 		}

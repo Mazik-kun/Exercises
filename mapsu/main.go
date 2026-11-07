@@ -53,7 +53,7 @@ func main() {
 		[]string{"apple", "banana", "cherry", "apple"}, 
 		[]string{"cherry", "banana", "date"},
 	)) 
-	fmt.Println(SymmetricDifference([]int{1, 2, 3, 4}, []int{2, 4, 5})) 
+	fmt.Println(SymmetricDifference([]int{3}, []int{3, 3})) 
 
 	fmt.Println(UniqueFold([]string{"Apple", "apple", "Banana", "banana", "Cherry"}))
 

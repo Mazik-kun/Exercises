@@ -93,7 +93,7 @@ func main() {
 	close(ch5) 
 
 	done := StartConsumer(ch5, func(v int) {
-		time.Sleep(1 * time.Second)
+		time.Sleep(100 * time.Millisecond)
 		fmt.Println("Обработано:", v*10)
 	})
 
@@ -109,4 +109,113 @@ func main() {
 	<-newDone
 	fmt.Println("new завершено 2")
 
+	ch6 := make(chan string, 7)
+	ch6 <- "apple"
+	ch6 <- "Apple"
+	ch6 <- ""
+	ch6 <- "apple"
+	ch6 <- "banana"
+	ch6 <- ""
+	close(ch6)
+	fmt.Println(WordCounts(ch6))
+
+	ch17 := make(chan int, 4)
+	ch17 <- 1
+	ch17 <- 2
+	ch17 <- 5
+	ch17 <- 4
+	close(ch17)
+	fmt.Println(IsNonDecreasing(ch17))
+
+	square := func(x int) int { return x * x }
+	ch18 := Generate(3, square)
+
+	for v := range ch18 {
+		fmt.Println(v) 
+	}
+
+		ch19_1 := make(chan struct{})
+	ch19_2 := make(chan struct{})
+	ch19_3 := make(chan struct{})
+	go func() {
+		close(ch19_1)
+		close(ch19_2)
+		close(ch19_3)
+	}()
+	AwaitSignals([]<-chan struct{}{ch19_1, ch19_2, ch19_3})
+	fmt.Println("AwaitSignals completed")
+
+	fmt.Println("разделитель")
+
+	ch20_ready := make(chan struct{})
+	ch20_out := ReadAfterReady(ch20_ready, func() int { return 100 })
+	go func() {
+		ch20_ready <- struct{}{}
+	}()
+	fmt.Println(<-ch20_out)
+
+	fmt.Println("разделитель")
+
+	ch21_done := RunPairThenFinish(
+		func() { fmt.Println("first") },
+		func() { fmt.Println("second") },
+		func() { fmt.Println("finish") },
+	)
+	<-ch21_done
+
+	fmt.Println("разделитель")
+
+	ch22_out := StartBatch([]func() int{
+		func() int { return 1 },
+		func() int { return 2 },
+		func() int { return 3 },
+	})
+	for v := range ch22_out {
+		fmt.Println(v)
+	}
+
+	fmt.Println("разделитель")
+
+	ch23_out := StartCalculation(func() (int, error) {
+		return 42, nil
+	})
+	fmt.Println(<-ch23_out)
+
+	fmt.Println("разделитель")
+
+	ch24_out := make(chan int)
+	ch24_processed := make(chan struct{})
+	go func() {
+		val := <-ch24_out
+		fmt.Println("Received:", val)
+		close(ch24_processed)
+	}()
+	SendAndWait(55, ch24_out, ch24_processed)
+
+	fmt.Println("разделитель")
+
+	ch25_1 := make(chan int, 3)
+	ch25_1 <- 2
+	ch25_1 <- 10
+	ch25_1 <- 20
+	close(ch25_1)
+	res25, err25 := ReadFrame(ch25_1)
+	fmt.Println(res25, err25)
+
+	ch25_2 := make(chan int, 1)
+	ch25_2 <- -1
+	close(ch25_2)
+	_, err25_2 := ReadFrame(ch25_2)
+	fmt.Println(err25_2)
+
+	fmt.Println("разделитель")
+
+	ch26 := make(chan string, 5)
+	ch26 <- "a"
+	ch26 <- "start"
+	ch26 <- "b"
+	ch26 <- "start"
+	ch26 <- "c"
+	close(ch26)
+	fmt.Println(AfterMarker(ch26, "start"))
 }

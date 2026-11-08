@@ -44,7 +44,7 @@ func StartConsumer(in <-chan int, consume func(int)) <-chan struct{}
 func StartCompletion(work func()) <-chan struct{}
 
 15. Нужно запустить background в новой горутине, а local выполнить в вызывающей горутине параллельно с ней. Нужно дождаться обеих и вернуть результаты в порядке local, background.
-func RunAlongside(local, background func() int) (int, int)
+func RunAlongside(local, background func() int) (int, int) -- skipped
 
 16. Нужно считывать строки из канала in до его закрытия отправителем и посчитать, сколько раз встретилась каждая. Регистр и пустая строка значимы; если строк не было, нужно вернуть пустую мапу.
 func WordCounts(in <-chan string) map[string]int

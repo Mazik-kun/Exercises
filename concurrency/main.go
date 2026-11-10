@@ -5,6 +5,19 @@ import (
 	"time"
 )
 
+	func source(values ...int) <-chan int {
+	out := make(chan int)
+
+	go func() {
+		defer close(out)
+		for _, value := range values {
+			out <- value
+		}
+	}()
+
+	return out
+	}
+
 func main() {
 	ch := make(chan int)
 
@@ -54,7 +67,7 @@ func main() {
 	go func() {
 		for i := 1; i <= 5; i++ {
 			ch4 <- i 
-			time.Sleep(1000 * time.Millisecond)
+			time.Sleep(10 * time.Millisecond)
 		}
 		close(ch4)
 	}()
@@ -93,7 +106,7 @@ func main() {
 	close(ch5) 
 
 	done := StartConsumer(ch5, func(v int) {
-		time.Sleep(100 * time.Millisecond)
+		time.Sleep(1 * time.Millisecond)
 		fmt.Println("Обработано:", v*10)
 	})
 
@@ -218,4 +231,25 @@ func main() {
 	ch26 <- "c"
 	close(ch26)
 	fmt.Println(AfterMarker(ch26, "start"))
+
+	start := time.Now()
+	local, background := RunAlongside(
+		func() int {
+			fmt.Println("local завершилась")
+			return 10
+		},
+		func() int {
+			time.Sleep(2 * time.Second)
+			fmt.Println("background завершилась")
+			return 20
+		},
+	)
+	fmt.Println("Результаты:", local, background)
+	fmt.Println("Время:", time.Since(start))
+
+	pairs, err := PairStreams(
+		source(10, 20),
+		source(1, 2),
+	)
+	fmt.Println(pairs, err)
 }

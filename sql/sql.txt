@@ -1,0 +1,100 @@
+1. надо: id, email, name. по условию: все пользователи, сортировка id ASC.
+2. надо: id, name, stock. по условию: is_active = true, stock > 0, сортировка id.
+3. надо: id, name, price_kopecks. по условию: price_kopecks от 50000 до 100000 (вкл.), сортировка price, id.
+4. надо: id, email, city. по условию: name = 'Анна', сортировка id.
+5. надо: id, name. по условию: city IS NULL, сортировка id.
+6. надо: id, name, price_kopecks. по условию: все товары, сортировка price DESC, id ASC, LIMIT 3.
+7. надо: product_id, quantity, unit_price_kopecks, line_total_kopecks (вычисляемое). по условию: order_id = 1, сортировка product_id.
+8. надо: id, created_at, status. по условию: created_at в январе 2024 (>= 01.01, < 01.02), сортировка created_at, id.
+9. надо: id, created_at, canceled_at. по условию: canceled_at IS NOT NULL, сортировка canceled_at, id.
+10. надо: id, name, city. по условию: city != 'Москва' ИЛИ city IS NULL, сортировка id.
+11. надо: product_id, product_name, category_name. по условию: JOIN по category_id, сортировка product_id.
+12. надо: order_id, user_id, user_name, created_at. по условию: status = 'completed', сортировка created_at, order_id.
+13. надо: category_id, name. по условию: LEFT JOIN products, product_id IS NULL (нет товаров), сортировка category_id.
+14. надо: order_id, line_count, unit_count. по условию: LEFT JOIN order_items, группировка по order_id, сортировка order_id.
+15. надо: product_id, review_count, avg_rating (2 знака). по условию: INNER JOIN reviews, группировка по product_id, сортировка avg DESC, product_id.
+16. надо: city, user_count, known_city_count. по условию: группировка по city, сортировка user_count DESC, city NULLS LAST.
+17. надо: user_id, name, order_count. по условию: LEFT JOIN orders, группировка по user, сортировка order_count DESC, user_id.
+18. надо: status, attempt_count, amount_kopecks. по условию: группировка по status, сортировка status.
+19. надо: user_id, completed_count. по условию: status='completed', GROUP BY user_id HAVING count >= 2, сортировка count DESC, user_id.
+20. надо: cart_id, user_id, product_id, quantity, stock, is_active. по условию: JOIN carts, products, WHERE is_active = false OR quantity > stock, сортировка cart_id, product_id.
+21. надо: product_id, name, price_kopecks. по условию: price_kopecks > (SELECT avg(price) FROM products), сортировка price DESC, product_id.
+22. надо: user_id, name. по условию: EXISTS (completed orders), сортировка user_id.
+23. надо: order_id, status. по условию: NOT EXISTS (payments where status='succeeded'), сортировка order_id.
+24. надо: order_id, created_at, status. по условию: user_id=1, created_at <= '2024-02-01', ORDER BY created_at DESC, id DESC LIMIT 1.
+25. надо: order_id, status, total_kopecks. по условию: CTE (сумма order_items), LEFT JOIN с orders, сортировка total DESC, order_id.
+26. надо: cart_id, user_id, product_id, cart_quantity, bought_quantity. по условию: JOIN cart, order_items, orders (completed), группировка по cart_id, product_id, сортировка cart_id, product_id.
+27. надо: user_count, buyer_count, completed_order_count. по условию: по city, группировка, join completed orders, сортировка buyer_count DESC, city NULLS LAST.
+28. надо: order_id, attempt_count, paid_kopecks, completed_refund_count, refunded_kopecks, net_kopecks. по условию: LEFT JOIN payments, refunds, агрегация, net = paid - refunded, сортировка order_id.
+29. надо: product_id, gross_units, returned_units, net_units. по условию: LEFT JOIN completed orders и refunds, сортировка net DESC, product_id.
+30. надо: category_id, product_id, price_kopecks, price_rank. по условию: DENSE_RANK() OVER(PARTITION BY category ORDER BY price DESC), rank <= 2, сортировка category, rank, product_id.
+31. надо: product_id, review_count, avg_rating, rating_rank. по условию: GROUP BY product HAVING count >=2, RANK() over avg DESC, сортировка rank, product_id.
+32. надо: category_id, name, depth, path_ids. по условию: RECURSIVE CTE от ID 1, сортировка path_ids.
+33. надо: user_id, order_id, order_total_kopecks, running_total_kopecks. по условию: status != 'canceled', SUM() OVER (PARTITION BY user ORDER BY created_at), сортировка user, created_at, order_id.
+34. надо: user_id, order_id, created_at. по условию: все юзеры LEFT JOIN LATERAL (last order), сортировка user_id.
+35. надо: user_id, order_id, total_kopecks. по условию: status != 'canceled', ранг по сумме заказа, WHERE rank=1, сортировка user, order_id.
+36. надо: month_utc, order_count, canceled_count. по условию: generate_series (янв-май 2024), LEFT JOIN orders, группировка по месяцу.
+37. надо: product_id, stock, cart_units, shortage_units. по условию: LEFT JOIN cart_items, group by product, shortage = max(cart_units-stock, 0), сортировка shortage DESC.
+38. надо: user_id, product_id, order_count, gross_units. по условию: completed orders, GROUP BY user, product HAVING count >=2, сортировка order_count DESC.
+39. надо: product_id, ever_ordered, ever_paid. по условию: EXISTS (order_items), EXISTS (order_items JOIN payments succeeded).
+40. надо: only_user_1, only_user_2, common_count, union_count. по условию: множества товаров (EXCEPT, INTERSECT), один ряд.
+41. надо: source_user_id, new_user_id, email, city. по условию: INSERT INTO users SELECT ... WHERE NOT EXISTS (orders), RETURNING joined with original.
+42. надо: product_id, new_price_kopecks. по условию: category=2, active, avg(rating)>=4 (count>=2), UPDATE price +5000 RETURNING.
+43. надо: cart_id, product_id (deleted); cart_id, updated_at, remaining_lines (carts). по условию: DELETE FROM cart_items WHERE inactive/qty>stock, UPDATE carts, RETURNING.
+44. надо: cart_id, product_id, quantity. по условию: INSERT INTO cart_items ON CONFLICT DO UPDATE SET quantity = cart_items.quantity + excluded.quantity RETURNING.
+45. надо: order_id, product_id, quantity, unit_price_kopecks. по условию: INSERT INTO orders RETURNING, INSERT INTO order_items SELECT price from products.
+46. надо: refund_id, quantity, amount_kopecks. по условию: INSERT INTO refunds, locking payments FOR UPDATE, check limits, RETURNING.
+47. надо: order_id, order_status, canceled_at, payment_id, payment_status. по условию: UPDATE orders SET canceled, UPDATE payments SET failed, RETURNING.
+48. надо: review_id, rating, body, created_at. по условию: INSERT INTO reviews ON CONFLICT DO UPDATE, WHERE EXISTS (completed order).
+49. надо: user_id, city, product_id, stock. по условию: UPDATE city, SAVEPOINT, UPDATE stock=-1 (error), ROLLBACK TO SAVEPOINT, SELECT.
+50. надо: product_id, stock. по условию: UPDATE products SET stock=stock-1 WHERE id=1 AND stock>=1 RETURNING.
+51. надо: product_id, stock. по условию: SELECT в READ COMMITTED (дважды).
+52. надо: product_id, stock. по условию: SELECT в REPEATABLE READ (дважды + после коммита).
+53. надо: product_id, stock. по условию: SELECT FOR UPDATE + UPDATE с lock_timeout.
+54. надо: product_id, stock. по условию: UPDATE в разном порядке (цикл deadlock).
+55. надо: order_id, created_at. по условию: user 101, 2024, EXPLAIN ANALYZE с/без индекса (user_id, created_at).
+56. надо: month_utc, created_count, completed_count, canceled_count, paid_order_count, completion_pct. по условию: generate_series, left join orders/paid.
+57. надо: month_utc, paid_kopecks, refunded_kopecks, net_kopecks, running_net_kopecks. по условию: generate_series, независимые агрегации, window sum.
+58. надо: occurred_at, event_kind, source_id, amount_kopecks, cash_delta, running_net, since_previous. по условию: UNION ALL (order, payments, refunds), window functions.
+59. надо: order_id, payment_id, paid_at, amount_kopecks, refunded, net. по условию: LATERAL join (last succeeded payment <= cutoff), LEFT JOIN refunds <= cutoff.
+60. надо: user_id, paid_kopecks, refunded_kopecks, net_kopecks. по условию: user.created <= '2024-03-01', агрегация payments/refunds <= cutoff.
+61. надо: user_id, order_id, previous_order_id, gap_interval. по условию: completed, LAG() over (partition by user order by created_at).
+62. надо: user_id, start_day, end_day, day_count. по условию: CTE (user_id, day), group by (day - row_number), count >=2.
+63. надо: user_id, missing_month_utc. по условию: generate_series (min/max order), EXCEPT order months.
+64. надо: day, net_kopecks, average_7_days. по условию: generate_series, LEFT JOIN payments/refunds, AVG over 7 days.
+65. надо: user_id, order_id, total_kopecks, window_count, average_last_3. по условию: completed, ROWS BETWEEN 2 PRECEDING AND CURRENT ROW.
+66. надо: cohort_month, user_count, buyers_same, buyers_next, pct. по условию: group by user registration month, count buyers in month/next month.
+67. надо: user_a, user_b, product_count. по условию: EXCEPT both ways (сравнение множеств completed products).
+68. надо: user_id, name. по условию: NOT EXISTS (active products cat2 EXCEPT user's completed products).
+69. надо: product_id, previous_month, current_month. по условию: completed orders, LAG() on month, WHERE prev_month = curr_month - 1 month.
+70. надо: cart_a, cart_b, common_count, union_count, jaccard. по условию: cross join carts a < b, intersect/union.
+71. надо: product_id, before_review_id, after_review_id, before_rating, after_rating, delta, changed. по условию: LATERAL (latest review <= date 1, <= date 2).
+72. надо: product_id, review_count, raw_avg, score, score_rank. по условию: (sum+5*global_avg)/(count+5), DENSE_RANK.
+73. надо: user_id, order_id, prev_total, curr_total, next_total. по условию: status!='canceled', LAG, LEAD on total, WHERE curr < prev AND curr < next.
+74. надо: order_item_id, payment_id, remaining_units, payment_budget_kopecks, max_refund. по условию: LATERAL (last succeeded payment), minus refunds.
+75. надо: month_utc, product_id, gross_kopecks, refunded_kopecks, net_kopecks. по условию: cross join months, distribute payments to items, refunds.
+76. надо: order_id, order_total, attempt_count. по условию: LATERAL join / CTE to aggregate items and payments separately.
+77. надо: category_id, subtree_product_count, net_kopecks. по условию: RECURSIVE CTE, join products, sum payments/refunds.
+78. надо: root_id, cycle_path. по условию: RECURSIVE CTE nodes, array path, WHERE id = ANY(path).
+79. надо: product_id, category_id, new_price_kopecks. по условию: RECURSIVE CTE from cat 1, UPDATE active products +10% RETURNING.
+80. надо: user_id, cart_id, item_count. по условию: CTE INSERT user RETURNING, INSERT cart RETURNING.
+81. надо: order_id, product_id, quantity, unit_price_kopecks, remaining_stock. по условию: lock cart, update stock, insert order/items/payment, delete cart.
+82. надо: product_id, reserved_units, remaining_stock. по условию: group by product_id, lock, update stock if all ok.
+83. надо: order_id, order_status, payment_id, payment_status, paid_at. по условию: lock, check amounts, update order to 'paid', payment to 'succeeded'.
+84. надо: order_id, refunded_total, net_kopecks. по условию: lock, insert refunds, update stock, order to 'canceled'.
+85. надо: remaining_units. по условию: lock payment FOR UPDATE, check limits, insert requested refund.
+86. надо: paid, refunded, net. по условию: READ COMMITTED vs REPEATABLE READ transactions (phantom reads).
+87. надо: product_id, is_active, active_count. по условию: REPEATABLE READ vs SERIALIZABLE (write skew).
+88. надо: product_id, stock. по условию: UPDATE stock=stock-1 WHERE stock>=1 RETURNING (lost update prevention).
+89. надо: initial_stock, final_stock, effective_decrements. по условию: константный UPDATE vs относительный UPDATE.
+90. надо: product_id, stock. по условию: lock by sorted IDs (deadlock avoidance), update stock.
+91. надо: product_id, price_kopecks. по условию: OFFSET vs WHERE (price, id) > (last_price, last_id).
+92. надо: order_id, created_at. по условию: user=101, status='new', EXPLAIN ANALYZE с composite index.
+93. надо: payment_id, order_id, amount_kopecks. по условию: status='pending', order_id in (1000..2000), EXPLAIN с partial index.
+94. надо: user_id, email. по условию: lower(email)='user100@example.test', UNIQUE index lower(email), insert conflict.
+95. надо: category_id, product_id, price_kopecks. по условию: LEFT JOIN LATERAL top 3 products per cat, ROW_NUMBER alternative.
+96. надо: order_id, user_id, status. по условию: user=101, status='new', EXPLAIN, CREATE STATISTICS, ANALYZE.
+97. надо: order_id, user_id. по условию: NOT EXISTS (succeeded payments), EXPLAIN with partial index.
+98. надо: march_count, april_count. по условию: CTE MATERIALIZED vs NOT MATERIALIZED, EXPLAIN.
+99. надо: product_id, stock. по условию: EXPLAIN ANALYZE UPDATE, SELECT vs UPDATE lock wait.
+100. надо: month_utc, category_id, paid_order_count, gross, refunded, net, running_net, rank, is_top_2. по условию: cross join months, cats, lateral join orders, window sums, DENSE_RANK.
